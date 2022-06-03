@@ -1,22 +1,37 @@
-const mysql = require('mysql');
-const db = require('../config/mysql');
-const table = 'user_db';
+module.exports = (sequelize, DataTypes) => {
+    const User = sequelize.define("User", {
+        email: {
+            type: DataTypes.STRING(30),
+            primaryKey: true,
+            validate: {
+                isEmail: true,
+            },
+            comment: '학교 이메일',
+        },
+        student_num: {
+            type: DataTypes.STRING(4),
+            comment: '학번',
+        },
+        name: {
+            type: DataTypes.STRING(10),
+            allowNull: false,
+            comment: '이름',
+        },
+        password: {
+            type: DataTypes.STRING(60),
+            allowNull: false,
+            comment: '학생 비밀번호',
+        },
+        step: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            comment: '문제 단계',
+        }
+    }, {
+        charset: 'utf8',
+        collate: "utf8_general_ci",
+        tableName: 'User'
+    });
 
-module.exports = {
-    getUser: function() {
-        return new Promise ((resolve, reject) => {
-            const connection = mysql.createConnection(db);
-            connection.query(
-                `SELECT email, name, student_number, step FROM ${table}`,
-                (error, result, fields) =>{
-                    if(error){
-                        reject(error);
-                    }else{
-                        resolve(result);
-                    }
-                }
-            );
-            connection.end();
-        })
-    }
+    return User;
 }
