@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    const Difficulty = sequelize.define("Level", {
+    const Level = sequelize.define("Level", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
