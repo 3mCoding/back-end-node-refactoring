@@ -6,11 +6,6 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             comment: '난이도 문제 고유 ID',
         },
-        no: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            comment: '난이도 문제 번호',
-        },
         title: {
             type: DataTypes.STRING(30),
             allowNull: false,
