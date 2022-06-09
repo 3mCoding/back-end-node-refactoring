@@ -22,10 +22,15 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             comment: '학생 비밀번호',
         },
-        step: {
+        stage: {
             type: DataTypes.INTEGER,
             allowNull: false,
             comment: '문제 단계',
+        },
+        solve_count: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            comment: '문제 푼 개수'
         }
     }, {
         charset: 'utf8',
