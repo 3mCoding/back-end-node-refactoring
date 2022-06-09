@@ -38,5 +38,17 @@ module.exports = (sequelize, DataTypes) => {
         tableName: 'User'
     });
 
+    User.getUser = email => User.findOne({
+        attributes: [
+            'email',
+            'student_num',
+            'name',
+            'stage',
+            'solve_count',
+        ],
+        where: {
+            email: email
+        }
+    });
     return User;
 }
