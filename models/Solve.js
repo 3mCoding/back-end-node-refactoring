@@ -5,15 +5,6 @@ module.exports = (sequelize, DataTypes) => {
             primaryKey: true,
             autoIncrement: true,
             comment: '해결한 난이도 문제의 Log 고유 ID',
-        },
-        user_email : {
-            type: DataTypes.STRING(30),
-            allowNull: false,
-            comment: '문제를 해결한 사람의 이메일'
-        },
-        difficulty_id: {
-            type: DataTypes.INTEGER,
-            comment: '해결한 난이도 문제의 고유 ID',
         }
     }, {
         charset: 'utf8',
@@ -28,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
         });
 
         models.Solve.belongsTo(models.Level, {
-            foreignKey: 'Level_id',
+            foreignKey: 'level_id',
             sourceKey: 'id'
         });
     };
