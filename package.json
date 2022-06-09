@@ -16,5 +16,17 @@
     "pug": "2.0.0-beta11",
     "sequelize": "^6.20.1",
     "sequelize-cli": "^6.4.1"
-  }
+  },
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/3mCoding/back-end-node-refactoring.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/3mCoding/back-end-node-refactoring/issues"
+  },
+  "homepage": "https://github.com/3mCoding/back-end-node-refactoring#readme",
+  "description": ""
 }
