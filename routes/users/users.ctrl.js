@@ -20,7 +20,6 @@ exports.join = async (req, res) => {
         const salt = 10;
         const hashPassword = bcrypt.hashSync(body.password, salt);
 
-
         await models.User.create({
             name: body.name,
             email: body.email,
@@ -36,9 +35,10 @@ exports.join = async (req, res) => {
                 message: '이메일 형식이 올바르지 않습니다.'
             });
         })
-
+        const data = await models.User.getUser(body.email);
         return res.status(200).json({
             message: '회원가입 되었습니다.',
+            data
         });
     } catch (err) {
         console.log(err);
@@ -102,5 +102,5 @@ exports.ranking = async (req, res) => {
             return res.status(500).json({
                 message: '서버 오류'
             });
-        })
+        });
 }
