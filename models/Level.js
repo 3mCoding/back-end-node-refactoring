@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             comment: '난이도 문제 고유 ID',
         },
-        levels: {
+        level: {
             type: DataTypes.STRING(1),
             allowNull: false,
             comment: '난이도 문제 수준 - 0: 순한맛, 1: 약간매운맛, 2:매운맛'

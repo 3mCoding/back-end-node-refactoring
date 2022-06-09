@@ -5,6 +5,6 @@ const levelCtrl = require('./levels.ctrl');
 router.get('/', levelCtrl.getQuest);
 router.get('/list', levelCtrl.getQuests);
 router.put('/solve', levelCtrl.solveQuestion);
-// router.get('/suggestion', levelCtrl.suggestQuestion);
+router.get('/suggestion', levelCtrl.suggestQuestion);
 
 module.exports = router;
