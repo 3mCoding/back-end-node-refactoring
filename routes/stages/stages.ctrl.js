@@ -40,7 +40,7 @@ exports.getQuests = async (req, res) => {
 }
 exports.solveQuestion = async (req, res) => {
     const body = req.body;
-    const user = models.User.findOne({
+    models.User.findOne({
             attributes: [
                 'stage',
                 'solve_count'
@@ -58,7 +58,7 @@ exports.solveQuestion = async (req, res) => {
                     email: body.email
                 }
             })
-            const data = models.User.getUser(body.email)
+            models.User.getUser(body.email)
                 .then((data) => {
                     return res.status(200).json({
                         data
