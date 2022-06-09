@@ -6,10 +6,15 @@ module.exports = (sequelize, DataTypes) => {
             autoIncrement: true,
             comment: '난이도 문제 고유 ID',
         },
-        levels:{
-            type:DataTypes.STRING(1),
+        levels: {
+            type: DataTypes.STRING(1),
             allowNull: false,
             comment: '난이도 문제 수준 - 0: 순한맛, 1: 약간매운맛, 2:매운맛'
+        },
+        time: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            comment: '난이도 문제 소요 시간'
         },
         title: {
             type: DataTypes.STRING(30),
