@@ -81,3 +81,26 @@ exports.login = async (req, res) => {
         });
     }
 };
+exports.ranking = async (req, res) => {
+    models.User.findAll({
+            attributes: [
+                'name',
+                'student_num',
+                'solve_count',
+            ],
+            order: [
+                ['solve_count', 'DESC']
+            ]
+        })
+        .then(data => {
+            return res.status(200).json({
+                data
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({
+                message: '서버 오류'
+            });
+        })
+}
