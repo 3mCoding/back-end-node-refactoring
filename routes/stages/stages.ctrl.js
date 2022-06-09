@@ -9,35 +9,40 @@ exports.getQuest = async (req, res) => {
             message: '문제의 언어 또는 문제의 번호를 찾을 수 없습니다.'
         });
     }
-    const data = await models.Stage.findOne({
-        where: {
-            no: query.no,
-            type: query.type
-        }
-    });
-    if (data) {
-        return res.status(200).json({
-            data
+    await models.Stage.findOne({
+            where: {
+                no: query.no,
+                type: query.type
+            }
+        })
+        .then(data => {
+            if (data) {
+                return res.status(200).json({
+                    data
+                });
+            } else {
+                return res.status(404).json({
+                    message: '문제를 찾을 수 없습니다.'
+                });
+            }
         });
-    } else {
-        return res.status(404).json({
-            message: '문제를 찾을 수 없습니다.'
-        });
-    }
+};
 
-}
 exports.getQuests = async (req, res) => {
-    const data = await models.Stage.findAll({
-        attributes: [
-            'id',
-            'no',
-            'title',
-        ]
-    });
-    return res.status(200).json({
-        data
-    });
-}
+    await models.Stage.findAll({
+            attributes: [
+                'id',
+                'no',
+                'title',
+            ]
+        })
+        .then(data => {
+            return res.status(200).json({
+                data
+            });
+        });
+};
+
 exports.solveQuestion = async (req, res) => {
     const body = req.body;
     models.User.findOne({
