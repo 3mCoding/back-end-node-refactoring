@@ -11,7 +11,7 @@ db.Sequelize = Sequelize;
 
 db.User = require('./User')(sequelize, Sequelize);
 db.Solve = require('./Solve')(sequelize, Sequelize);
-db.Difficulty = require('./Difficulty')(sequelize, Sequelize);
+db.Level = require('./Level')(sequelize, Sequelize);
 db.Stage = require('./Stage')(sequelize, Sequelize);
 
 Object.keys(db).forEach((modelName) => {

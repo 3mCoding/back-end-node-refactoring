@@ -27,8 +27,8 @@ module.exports = (sequelize, DataTypes) => {
             sourceKey: 'email'
         });
 
-        models.Solve.belongsTo(models.Difficulty, {
-            foreignKey: 'difficulty_id',
+        models.Solve.belongsTo(models.Level, {
+            foreignKey: 'Level_id',
             sourceKey: 'id'
         });
     };

@@ -1,10 +1,15 @@
 module.exports = (sequelize, DataTypes) => {
-    const Difficulty = sequelize.define("Difficulty", {
+    const Difficulty = sequelize.define("Level", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             comment: '난이도 문제 고유 ID',
+        },
+        levels:{
+            type:DataTypes.STRING(1),
+            allowNull: false,
+            comment: '난이도 문제 수준 - 0: 순한맛, 1: 약간매운맛, 2:매운맛'
         },
         title: {
             type: DataTypes.STRING(30),
@@ -43,8 +48,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         charset: 'utf8',
         collate: "utf8_general_ci",
-        tableName: 'Difficulty'
+        tableName: 'Level'
     });
 
-    return Difficulty;
+    return Level;
 };
