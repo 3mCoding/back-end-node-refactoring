@@ -36,7 +36,7 @@ exports.join = async (req, res) => {
             });
         })
         const data = await models.User.getUser(body.email);
-        return res.status(200).json({
+        return res.status(201).json({
             message: '회원가입 되었습니다.',
             data
         });
