@@ -2,9 +2,8 @@ const models = require('../../models');
 
 exports.getQuest = async (req, res) => {
     const query = req.query;
-    console.log(query.no);
-    console.log(query.type)
-    if (query.no === undefined || query.type === undefined) {
+
+    if (query.no === undefined || query.type === undefined || query.no == '' || query.type == '') {
         return res.status(400).json({
             message: '문제의 언어 또는 문제의 번호를 찾을 수 없습니다.'
         });
@@ -34,7 +33,10 @@ exports.getQuests = async (req, res) => {
                 'id',
                 'no',
                 'title',
-            ]
+            ],
+            where:{
+                type: '0'
+            }
         })
         .then(data => {
             return res.status(200).json({
