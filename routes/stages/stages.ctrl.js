@@ -33,7 +33,10 @@ exports.getQuests = async (req, res) => {
                 'id',
                 'no',
                 'title',
-            ]
+            ],
+            where:{
+                type: '0'
+            }
         })
         .then(data => {
             return res.status(200).json({
