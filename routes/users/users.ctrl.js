@@ -1,6 +1,6 @@
 const models = require('../../models');
 const bcrypt = require('bcrypt');
-
+const salt = 10;
 exports.join = async (req, res) => {
     const body = req.body;
 
@@ -17,7 +17,6 @@ exports.join = async (req, res) => {
             });
         }
 
-        const salt = 10;
         const hashPassword = bcrypt.hashSync(body.password, salt);
 
         await models.User.create({
@@ -127,7 +126,7 @@ exports.update = async (req, res) => {
                     message: '회원 정보를 변경할 회원을 찾을 수 없습니다.'
                 });
             }
-            return res.status(204).json({
+            return res.status(200).json({
                 message: '회원 정보가 수정되었습니다.'
             });
         })
@@ -150,11 +149,60 @@ exports.delete = async (req, res) => {
                     message: '탈퇴할 회원을 찾을 수 없습니다.'
                 });
             }
-            return res.status(204).json({
+            return res.status(200).json({
                 message: '탈퇴되었습니다.'
             });
         })
         .catch((e) => {
+            console.log(e);
+            return res.status(500).json({
+                message: '서버 오류'
+            });
+        })
+}
+exports.passwordUpdate = async (req, res) => {
+    const body = req.body;
+    const param = req.params;
+    if (body.password === undefined || body.newPassword === undefined || body.password == '' || body.newPassword == '') {
+        return res.status(400).json({
+            message: 'Request Body 형식이 유효하지 않습니다.'
+        });
+    }
+    await models.User.findOne({
+            where: {
+                email: param.email
+            }
+        })
+        .then(user => {
+            if (!user) {
+                return res.status(404).json({
+                    message: '회원을 찾을 수 없습니다.'
+                });
+            }
+            const passwordValid = bcrypt.compareSync(body.password, user.password);
+            if (passwordValid) {
+                const hashPassword = bcrypt.hashSync(body.newPassword, salt);
+                models.User.update({
+                        password: hashPassword
+                    }, {
+                        where: {
+                            email: param.email
+                        }
+                    })
+                    .then(() => {
+                        return res.status(200).json({
+                            message: '비밀번호가 변경되었습니다.'
+                        });
+                    })
+                    .catch(e => {
+                        console.log(e);
+                        return res.status(500).json({
+                            message: '서버 오류'
+                        });
+                    })
+            }
+        })
+        .catch(e => {
             console.log(e);
             return res.status(500).json({
                 message: '서버 오류'

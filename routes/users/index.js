@@ -7,4 +7,5 @@ router.post('/login', userCtrl.login);
 router.get('/ranking', userCtrl.ranking);
 router.put('/:email', userCtrl.update);
 router.delete('/:email', userCtrl.delete);
+router.put('/password/:email', userCtrl.passwordUpdate);
 module.exports = router;
