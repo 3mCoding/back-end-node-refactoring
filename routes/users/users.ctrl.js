@@ -107,7 +107,7 @@ exports.ranking = async (req, res) => {
 exports.update = async (req, res) => {
     const body = req.body;
     const param = req.params;
-    if (body.name === undefined || body.studentNumber === undefined) {
+    if (body.name === undefined || body.studentNumber === undefined || body.name == '' || body.studentNumber == '') {
         return res.status(400).json({
             message: '변경할 회원의 이름과 학번이 존재하지 않습니다.'
         });
@@ -123,13 +123,35 @@ exports.update = async (req, res) => {
         .then((User) => {
             console.log(User)
             if (User == 0) {
-                console.log("length")
                 return res.status(404).json({
                     message: '회원 정보를 변경할 회원을 찾을 수 없습니다.'
                 });
             }
             return res.status(204).json({
                 message: '회원 정보가 수정되었습니다.'
+            });
+        })
+        .catch((e) => {
+            console.log(e);
+            return res.status(500).json({
+                message: '서버 오류'
+            });
+        })
+}
+exports.delete = async (req, res) => {
+    const email = req.params.email;
+    models.User.destroy({
+            where: {
+                email: email
+            }
+        }).then(User => {
+            if (User == 0) {
+                return res.status(404).json({
+                    message: '탈퇴할 회원을 찾을 수 없습니다.'
+                });
+            }
+            return res.status(204).json({
+                message: '탈퇴되었습니다.'
             });
         })
         .catch((e) => {
