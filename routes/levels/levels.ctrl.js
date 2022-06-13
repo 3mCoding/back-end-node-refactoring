@@ -2,6 +2,9 @@ const models = require('../../models');
 const {
     Op
 } = require('sequelize');
+const {
+    sequelize
+} = require('../../models');
 
 exports.getQuest = async (req, res) => {
     const query = req.query;
@@ -105,10 +108,10 @@ exports.suggestQuestion = async (req, res) => {
             }
         })
         .then(async (questions) => {
-            const rand = Math.floor(Math.random() * questions.length);
-            if (rand === 0) {
-                const rand_id = Math.floor(Math.random() * 10) + 1;
-                models.Level.findOne({
+            if (questions.length > 0) {
+                console.log("if")
+                const rand_id = Math.floor(Math.random() * questions.length) + 1;
+                await models.Level.findOne({
                         where: {
                             id: rand_id
                         }
@@ -124,24 +127,17 @@ exports.suggestQuestion = async (req, res) => {
                             message: '서버 오류'
                         });
                     });
-            }
-            models.Level.findOne({
-                    where: {
-                        id: questions[rand].id
-                    }
+            }else{
+                console.log("else")
+                models.Level.findOne({
+                    order: sequelize.fn('RAND')
                 })
                 .then(async (data) => {
                     return res.status(200).json({
                         data
                     });
                 })
-                .catch(err => {
-                    console.log(err);
-                    return res.status(500).json({
-                        message: '서버 오류'
-                    });
-                });
-
+            }
         })
         .catch(err => {
             console.log(err);
