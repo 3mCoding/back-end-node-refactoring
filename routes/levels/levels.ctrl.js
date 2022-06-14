@@ -34,17 +34,18 @@ exports.getQuest = async (req, res) => {
 };
 
 exports.getQuests = async (req, res) => {
-    await models.Level.findAll({
-            attributes: [
-                'id',
-                'title',
-                'level',
-                'time'
-            ]
-        })
-        .then(data => {
+    const email = req.params.email;
+    await sequelize.query(`select l.id, l.title, l.level, l.time, IFNULL((select true from Solve s where l.id = s.level_id and s.user_email = '${email}'), false) as 'solved' from Level l`)
+        .then(Questions => {
+            const data = Questions[0];
             return res.status(200).json({
                 data
+            });
+        })
+        .catch(e => {
+            console.log(e);
+            return res.status(500).json({
+                message: '서버 오류'
             });
         });
 };
