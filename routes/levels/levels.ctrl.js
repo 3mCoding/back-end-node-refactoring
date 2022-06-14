@@ -76,7 +76,7 @@ exports.solveQuestion = async (req, res) => {
                         level_id: body.id
                     });
                     return res.status(200).json({
-                        data
+                        solve_count : data.solve_count
                     });
                 })
                 .catch(err => {

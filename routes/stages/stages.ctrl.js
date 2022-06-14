@@ -34,7 +34,7 @@ exports.getQuests = async (req, res) => {
                 'no',
                 'title',
             ],
-            where:{
+            where: {
                 type: '0'
             }
         })
@@ -57,18 +57,27 @@ exports.solveQuestion = async (req, res) => {
             }
         })
         .then(async (user) => {
+            let stage = user.stage + 1;
+            let solve_count = user.solve_count + 1;
+
+            if (stage == 11) {
+                stage = 1;
+                solve_count = solve_count - 10;
+            }
+
             models.User.update({
-                stage: user.stage + 1,
-                solve_count: user.solve_count + 1
+                stage: stage,
+                solve_count: solve_count
             }, {
                 where: {
                     email: body.email
                 }
             })
             models.User.getUser(body.email)
-                .then((data) => {
+                .then(() => {
                     return res.status(200).json({
-                        data
+                        stage: stage,
+                        solve_count: solve_count
                     });
                 })
                 .catch(err => {
