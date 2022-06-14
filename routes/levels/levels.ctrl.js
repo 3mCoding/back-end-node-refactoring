@@ -35,7 +35,7 @@ exports.getQuest = async (req, res) => {
 
 exports.getQuests = async (req, res) => {
     const email = req.params.email;
-    await sequelize.query(`select l.id, l.title, l.level, l.time, IFNULL((select true from Solve s where l.id = s.level_id and s.user_email = '${email}'), false) as 'solved' from Level l`)
+    await sequelize.query(`select l.id, l.title, l.level, l.time, IFNULL((select true from Solve s where l.id = s.level_id and s.user_email = '${email}'), false) as 'solved' from Level l order by l.level`)
         .then(Questions => {
             const data = Questions[0];
             return res.status(200).json({
