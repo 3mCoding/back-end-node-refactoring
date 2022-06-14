@@ -72,12 +72,11 @@ exports.solveQuestion = async (req, res) => {
                     console.log(data.email);
                     models.Solve.create({
                         user_email: data.email,
-                        level_id: body.levelId
+                        level_id: body.id
                     });
                     return res.status(200).json({
                         data
                     });
-
                 })
                 .catch(err => {
                     console.log(err);
@@ -109,7 +108,6 @@ exports.suggestQuestion = async (req, res) => {
         })
         .then(async (questions) => {
             if (questions.length > 0) {
-                console.log("if")
                 const rand_id = Math.floor(Math.random() * questions.length) + 1;
                 await models.Level.findOne({
                         where: {
@@ -127,16 +125,15 @@ exports.suggestQuestion = async (req, res) => {
                             message: '서버 오류'
                         });
                     });
-            }else{
-                console.log("else")
+            } else {
                 models.Level.findOne({
-                    order: sequelize.fn('RAND')
-                })
-                .then(async (data) => {
-                    return res.status(200).json({
-                        data
-                    });
-                })
+                        order: sequelize.fn('RAND')
+                    })
+                    .then(async (data) => {
+                        return res.status(200).json({
+                            data
+                        });
+                    })
             }
         })
         .catch(err => {
