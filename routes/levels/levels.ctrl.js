@@ -61,16 +61,15 @@ exports.solveQuestion = async (req, res) => {
             }
         })
         .then(async (user) => {
-            models.User.update({
+            await models.User.update({
                 solve_count: user.solve_count + 1
             }, {
                 where: {
                     email: body.email
                 }
             })
-            models.User.getUser(body.email)
+            await models.User.getUser(body.email)
                 .then((data) => {
-                    console.log(data.email);
                     models.Solve.create({
                         user_email: data.email,
                         level_id: body.id
