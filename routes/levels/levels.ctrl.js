@@ -108,10 +108,10 @@ exports.suggestQuestion = async (req, res) => {
         })
         .then(async (questions) => {
             if (questions.length > 0) {
-                const rand_id = Math.floor(Math.random() * questions.length) + 1;
+                const rand_id = Math.floor(Math.random() * questions.length);
                 await models.Level.findOne({
                         where: {
-                            id: rand_id
+                            id: questions[rand_id].id
                         }
                     })
                     .then(async (data) => {
