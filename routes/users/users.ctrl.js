@@ -59,27 +59,24 @@ exports.login = async (req, res) => {
             const passwordValid = bcrypt.compareSync(body.password, user.password);
             if (passwordValid) {
                 const data = await models.User.getUser(body.email);
-                return res.json({
-                    status: 200,
-                    message: '로그인 되었습니다.',
+                return res.status(200).json({
+                    result: '로그인 되었습니다.',
                     data
                 });
             } else {
-                return res.json({
-                    status: 409,
-                    message: '비밀번호가 일치하지 않습니다.'
+                return res.status(400).json({
+                    result: '비밀번호가 일치하지 않습니다.'
                 });
             }
         } else {
-            return res.json({
-                status: 404,
-                message: '계정이 존재하지 않습니다.'
+            return res.status(404).json({
+                result: '계정이 존재하지 않습니다.'
             });
         }
     } catch (err) {
         console.log(err);
         return res.status(500).json({
-            message: '서버 오류'
+            result: '서버 오류'
         });
     }
 };
