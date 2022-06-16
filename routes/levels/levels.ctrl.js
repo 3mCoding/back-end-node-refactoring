@@ -75,7 +75,7 @@ exports.solveQuestion = async (req, res) => {
                         level_id: body.id
                     });
                     return res.status(200).json({
-                        solve_count : data.solve_count
+                        solve_count: data.solve_count
                     });
                 })
                 .catch(err => {
@@ -127,6 +127,9 @@ exports.suggestQuestion = async (req, res) => {
                     });
             } else {
                 models.Level.findOne({
+                        where: {
+                            level: query.level
+                        },
                         order: sequelize.fn('RAND')
                     })
                     .then(async (data) => {
