@@ -96,6 +96,23 @@ exports.suggestQuestion = async (req, res) => {
         });
     }
 
+    if(query.level == -1){
+        await models.Level.findOne({
+            order: sequelize.fn('RAND')
+        })
+        .then(async (data) => {
+            return res.status(200).json({
+                data
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            return res.status(500).json({
+                message: '서버 오류'
+            });
+        });
+    }
+    
     const time_a = (Number)(query.time) - 10;
     const time_b = (Number)(query.time) + 10;
     await models.Level.findAll({
@@ -127,16 +144,22 @@ exports.suggestQuestion = async (req, res) => {
                     });
             } else {
                 models.Level.findOne({
-                        where: {
-                            level: query.level
-                        },
-                        order: sequelize.fn('RAND')
-                    })
-                    .then(async (data) => {
-                        return res.status(200).json({
-                            data
-                        });
-                    })
+                    where: {
+                        level: query.level
+                    },
+                    order: sequelize.fn('RAND')
+                })
+                .then(async (data) => {
+                    return res.status(200).json({
+                        data
+                    });
+                })
+                .catch(err => {
+                    console.log(err);
+                    return res.status(500).json({
+                        message: '서버 오류'
+                    });
+                });
             }
         })
         .catch(err => {
