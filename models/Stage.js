@@ -53,7 +53,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         charset: 'utf8',
         collate: "utf8_general_ci",
-        tableName: 'Stage'
+        tableName: 'Stage',
+        timestamps: false
     });
 
     return Stage;

@@ -53,7 +53,8 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         charset: 'utf8',
         collate: "utf8_general_ci",
-        tableName: 'Level'
+        tableName: 'Level',
+        timestamps: false
     });
 
     return Level;
